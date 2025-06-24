@@ -25,7 +25,7 @@ export default function Home() {
     tags: [] as string[]
   })
   const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage, setItemsPerPage] = useState(50)
+  const [itemsPerPage, setItemsPerPage] = useState(200)
   const [tagEditorOpen, setTagEditorOpen] = useState(false)
   const [editingEmail, setEditingEmail] = useState<Email | null>(null)
   const [hasChanges, setHasChanges] = useState(false)
@@ -359,36 +359,7 @@ export default function Home() {
               onFiltersChange={handleFiltersChange} 
             />
 
-            {filteredEmails.length > 0 && (
-              <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="body2" color="text.secondary">
-                  Mostrando {filteredEmails.length} de {emails.length} emails
-                </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <FormControl size="small" sx={{ minWidth: 120 }}>
-                    <InputLabel>Por página</InputLabel>
-                    <Select
-                      value={itemsPerPage}
-                      label="Por página"
-                      onChange={(e) => {
-                        setItemsPerPage(e.target.value as number)
-                        setCurrentPage(1) // Resetear a la primera página
-                      }}
-                    >
-                      <MenuItem value={25}>25</MenuItem>
-                      <MenuItem value={50}>50</MenuItem>
-                      <MenuItem value={100}>100</MenuItem>
-                      <MenuItem value={200}>200</MenuItem>
-                    </Select>
-                  </FormControl>
-                  {Math.ceil(filteredEmails.length / itemsPerPage) > 1 && (
-                    <Typography variant="body2" color="text.secondary">
-                      Página {currentPage} de {Math.ceil(filteredEmails.length / itemsPerPage)}
-                    </Typography>
-                  )}
-                </Box>
-              </Box>
-            )}
+           
 
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {isMobile ? (
@@ -439,7 +410,38 @@ export default function Home() {
                   </Box>
                 </Box>
               )}
-            </Box>
+              </Box>
+              
+               {filteredEmails.length > 0 && (
+              <Box sx={{ mt: 2, mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant="body2" color="text.secondary">
+                  Mostrando {filteredEmails.length} de {emails.length} emails
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <FormControl size="small" sx={{ minWidth: 120 }}>
+                    <InputLabel>Por página</InputLabel>
+                    <Select
+                      value={itemsPerPage}
+                      label="Por página"
+                      onChange={(e) => {
+                        setItemsPerPage(e.target.value as number)
+                        setCurrentPage(1) // Resetear a la primera página
+                      }}
+                    >
+                      <MenuItem value={25}>25</MenuItem>
+                      <MenuItem value={50}>50</MenuItem>
+                      <MenuItem value={100}>100</MenuItem>
+                      <MenuItem value={200}>200</MenuItem>
+                    </Select>
+                  </FormControl>
+                  {Math.ceil(filteredEmails.length / itemsPerPage) > 1 && (
+                    <Typography variant="body2" color="text.secondary">
+                      Página {currentPage} de {Math.ceil(filteredEmails.length / itemsPerPage)}
+                    </Typography>
+                  )}
+                </Box>
+              </Box>
+            )}
           </>
         )}
       </Container>

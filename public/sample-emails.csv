@@ -1,0 +1,11 @@
+from,to,cc,bcc,subject,tags,body
+john.doe@example.com,jane.smith@company.com,manager@company.com,,Reunión de proyecto,"trabajo,importante,reunión","Hola Jane, necesitamos programar una reunión para discutir el progreso del proyecto. ¿Tienes disponibilidad esta semana?"
+sarah.wilson@example.com,team@startup.com,tech@startup.com,hr@startup.com,Actualización de código,"desarrollo,urgente,bug","Se ha corregido el bug crítico en el sistema de autenticación. Por favor, actualicen sus repositorios."
+mike.brown@example.com,clients@agency.com,,,Propuesta comercial,"ventas,propuesta,cliente","Adjunto encontrarán nuestra propuesta comercial para el proyecto de marketing digital."
+lisa.garcia@example.com,newsletter@company.com,,,Boletín mensual,"newsletter,marketing,mesual","Este mes tenemos grandes novedades en nuestros productos. ¡No se pierdan las ofertas especiales!"
+david.lee@example.com,support@service.com,admin@service.com,,Problema técnico,"soporte,problema,urgente","Estoy experimentando problemas con el acceso al panel de control. Necesito ayuda urgente."
+emma.davis@example.com,hr@company.com,,,Solicitud de vacaciones,"personal,vacaciones,aprobación","Solicito aprobación para tomar vacaciones del 15 al 30 de agosto."
+carlos.rodriguez@example.com,finance@company.com,accounting@company.com,,Reporte financiero,"finanzas,reporte,trimestral","Adjunto el reporte financiero del tercer trimestre para su revisión."
+ana.martinez@example.com,marketing@brand.com,,,Campaña publicitaria,"marketing,campaña,publicidad","Hemos lanzado la nueva campaña publicitaria. Los resultados iniciales son muy prometedores."
+robert.johnson@example.com,legal@company.com,,,Contrato de servicios,"legal,contrato,servicios","Necesitamos revisar el contrato de servicios antes de la firma final."
+maria.gonzalez@example.com,operations@company.com,logistics@company.com,,Optimización de procesos,"operaciones,optimización,procesos","He identificado varias oportunidades para optimizar nuestros procesos internos."

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { Container, Grid, Typography, Box, TextField, CircularProgress, useMediaQuery, useTheme, Button, Alert } from "@mui/material"
+import { Container, Grid, Typography, Box, TextField, CircularProgress, useMediaQuery, useTheme, Button, Alert, FormControl, InputLabel, Select, MenuItem } from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
 import UploadIcon from "@mui/icons-material/Upload"
 import Papa from "papaparse"
@@ -22,6 +22,8 @@ export default function Home() {
     paraRoles: [] as string[],
     tags: [] as string[]
   })
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState(50)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const theme = useTheme()
@@ -162,6 +164,11 @@ export default function Home() {
     tags: string[]
   }) => {
     setFilters(newFilters)
+    setCurrentPage(1) // Resetear a la primera página cuando cambian los filtros
+  }
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
   }
 
   const handleEmailSelect = (email: Email) => {
@@ -255,6 +262,37 @@ export default function Home() {
             onFiltersChange={handleFiltersChange} 
           />
 
+          {filteredEmails.length > 0 && (
+            <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Typography variant="body2" color="text.secondary">
+                Mostrando {filteredEmails.length} de {emails.length} emails
+              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <FormControl size="small" sx={{ minWidth: 120 }}>
+                  <InputLabel>Por página</InputLabel>
+                  <Select
+                    value={itemsPerPage}
+                    label="Por página"
+                    onChange={(e) => {
+                      setItemsPerPage(e.target.value as number)
+                      setCurrentPage(1) // Resetear a la primera página
+                    }}
+                  >
+                    <MenuItem value={25}>25</MenuItem>
+                    <MenuItem value={50}>50</MenuItem>
+                    <MenuItem value={100}>100</MenuItem>
+                    <MenuItem value={200}>200</MenuItem>
+                  </Select>
+                </FormControl>
+                {Math.ceil(filteredEmails.length / itemsPerPage) > 1 && (
+                  <Typography variant="body2" color="text.secondary">
+                    Página {currentPage} de {Math.ceil(filteredEmails.length / itemsPerPage)}
+                  </Typography>
+                )}
+              </Box>
+            </Box>
+          )}
+
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             {isMobile ? (
               // Mobile layout - stacked
@@ -265,6 +303,9 @@ export default function Home() {
                       emails={filteredEmails}
                       selectedEmailId={(selectedEmail as Email | null)?.id}
                       onEmailSelect={handleEmailSelect}
+                      page={currentPage}
+                      onPageChange={handlePageChange}
+                      itemsPerPage={itemsPerPage}
                     />
                   </Box>
                 ) : (
@@ -281,6 +322,9 @@ export default function Home() {
                     emails={filteredEmails}
                     selectedEmailId={(selectedEmail as Email | null)?.id}
                     onEmailSelect={handleEmailSelect}
+                    page={currentPage}
+                    onPageChange={handlePageChange}
+                    itemsPerPage={itemsPerPage}
                   />
                 </Box>
                 <Box sx={{ flex: '1' }}>

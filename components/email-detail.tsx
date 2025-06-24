@@ -1,15 +1,17 @@
 "use client"
 
-import { Paper, Typography, Box, Divider, Button, useMediaQuery, useTheme, Chip } from "@mui/material"
+import { Paper, Typography, Box, Divider, Button, useMediaQuery, useTheme, Chip, IconButton } from "@mui/material"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
+import EditIcon from "@mui/icons-material/Edit"
 import type { Email } from "@/types/email"
 
 interface EmailDetailProps {
   email: Email
   onBack?: () => void
+  onEditTags?: (email: Email) => void
 }
 
-export default function EmailDetail({ email, onBack }: EmailDetailProps) {
+export default function EmailDetail({ email, onBack, onEditTags }: EmailDetailProps) {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down("md"))
 
@@ -102,10 +104,21 @@ export default function EmailDetail({ email, onBack }: EmailDetailProps) {
 
       {email.tag_tema && (
         <Box sx={{ mb: 2 }}>
-          <Typography variant="subtitle2" component="span" color="text.secondary">
-            Temas:
-          </Typography>{" "}
-          <Box sx={{ mt: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+            <Typography variant="subtitle2" component="span" color="text.secondary">
+              Temas:
+            </Typography>
+            {onEditTags && (
+              <IconButton 
+                size="small" 
+                onClick={() => onEditTags(email)}
+                sx={{ ml: 1 }}
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            )}
+          </Box>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             {email.tag_tema.split(',').map((tag, index) => (
               <Chip 
                 key={index} 
@@ -115,6 +128,26 @@ export default function EmailDetail({ email, onBack }: EmailDetailProps) {
               />
             ))}
           </Box>
+        </Box>
+      )}
+
+      {!email.tag_tema && onEditTags && (
+        <Box sx={{ mb: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+            <Typography variant="subtitle2" component="span" color="text.secondary">
+              Temas:
+            </Typography>
+            <IconButton 
+              size="small" 
+              onClick={() => onEditTags(email)}
+              sx={{ ml: 1 }}
+            >
+              <EditIcon fontSize="small" />
+            </IconButton>
+          </Box>
+          <Typography variant="body2" color="text.secondary">
+            Sin etiquetas
+          </Typography>
         </Box>
       )}
 

@@ -48,6 +48,10 @@ export default function FilterPanel({ emails, onFiltersChange }: FilterPanelProp
     )
   )).filter(tag => tag.length > 0).sort()
 
+  // Agregar opción "Sin tema" si hay emails sin tags
+  const hasEmailsWithoutTags = emails.some(email => !email.tag_tema || email.tag_tema.trim() === '')
+  const allTagsWithNone = hasEmailsWithoutTags ? ['Sin tema', ...allTags] : allTags
+
   const handleDeRolesChange = (event: SelectChangeEvent<string[]>) => {
     const value = event.target.value as string[]
     setDeRoles(value)
@@ -183,7 +187,7 @@ export default function FilterPanel({ emails, onFiltersChange }: FilterPanelProp
               </Box>
             )}
           >
-            {allTags.map((tag) => (
+            {allTagsWithNone.map((tag) => (
               <MenuItem key={tag} value={tag}>
                 {tag}
               </MenuItem>
